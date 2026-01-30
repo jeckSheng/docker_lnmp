@@ -25,3 +25,4 @@ certbot/*
 services/nginx/conf/*
 !services/nginx/conf/.gitkeep
 !services/nginx/conf/example.conf.template
+CLAUDE.md

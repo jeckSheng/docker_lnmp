@@ -157,6 +157,24 @@ make nginx-reload
 - 图像: gd, imagick
 - 其他: xdebug, opcache, mbstring, zip, intl, bcmath, soap, xsl 等
 
+### 添加扩展
+
+使用脚本添加 PECL 扩展：
+
+```bash
+# 添加扩展到 Dockerfile
+./bin/add-php-extension.sh <php版本> <扩展名> [版本号]
+
+# 示例
+./bin/add-php-extension.sh 83 mongodb 1.17.0
+./bin/add-php-extension.sh 74 swoole
+
+# 或使用 make 命令
+make add-ext php=83 ext=mongodb ver=1.17.0
+```
+
+添加后需重建镜像：`make rebuild php=83`
+
 ## Xdebug 配置
 
 默认配置支持 PHPStorm 调试：

@@ -227,6 +227,16 @@ redis-cli: ## 连接 Redis
 	@echo "$(CYAN)连接 Redis...$(RESET)"
 	@$(DOCKER_COMPOSE) exec redis redis-cli -a $${REDIS_PASSWORD:-123456}
 
+# --- 扩展管理 ---
+.PHONY: add-ext
+add-ext: ## 添加 PHP 扩展 (php=版本 ext=扩展名 ver=版本号)
+	@if [ -z "$(php)" ] || [ -z "$(ext)" ]; then \
+		echo "$(RED)错误: 请指定 php 和 ext 参数$(RESET)"; \
+		echo "$(YELLOW)用法: make add-ext php=83 ext=mongodb ver=1.17.0$(RESET)"; \
+		exit 1; \
+	fi
+	@./bin/add-php-extension.sh $(php) $(ext) $(ver)
+
 # --- 镜像管理 ---
 .PHONY: rebuild rebuild-all
 rebuild: ## 重建 PHP 镜像 (php=版本)
@@ -358,6 +368,7 @@ help: ## 显示帮助信息
 	@echo ""
 	@echo "$(MAGENTA)其他:$(RESET)"
 	@echo "  $(GREEN)make laravel name=项目$(RESET)  创建 Laravel 项目"
+	@echo "  $(GREEN)make add-ext php=83 ext=mongodb$(RESET)  添加 PHP 扩展"
 	@echo "  $(GREEN)make rebuild php=83$(RESET)     重建 PHP 镜像"
 	@echo "  $(GREEN)make doctor$(RESET)             系统诊断"
 	@echo ""

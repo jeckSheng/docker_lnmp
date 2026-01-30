@@ -3,7 +3,8 @@
 .env.local
 
 # Logs
-logs/
+logs/*
+!logs/.gitkeep
 *.log
 
 # Docker volumes

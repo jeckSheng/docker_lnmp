@@ -1,0 +1,26 @@
+# Environment
+.env
+.env.local
+
+# Logs
+logs/
+*.log
+
+# Docker volumes
+mysql/data/
+
+# SSL certificates
+certbot/*
+!certbot/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Nginx project configs (user-specific)
+services/nginx/conf/*
+!services/nginx/conf/.gitkeep
+!services/nginx/conf/example.conf.template

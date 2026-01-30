@@ -1,0 +1,55 @@
+# Example Nginx Virtual Host Configuration
+# 复制此文件并重命名为 your-project.conf
+
+server {
+    listen 80;
+    server_name example.local;
+
+    # 项目根目录（Laravel 使用 public）
+    root /var/www/html/example/public;
+    index index.php index.html;
+
+    # 日志（可选）
+    # access_log /var/log/nginx/example.access.log;
+    # error_log /var/log/nginx/example.error.log;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        # 选择 PHP 版本: php73:9000, php74:9000, php83:9000
+        fastcgi_pass php83:9000;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+
+        # 超时设置（可选）
+        # fastcgi_read_timeout 300;
+    }
+
+    # 静态文件缓存（可选）
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # 禁止访问隐藏文件
+    location ~ /\. {
+        deny all;
+    }
+}
+
+# HTTPS 配置示例
+# server {
+#     listen 443 ssl;
+#     server_name example.local;
+#
+#     ssl_certificate /etc/nginx/ssl/ssl.pem;
+#     ssl_certificate_key /etc/nginx/ssl/ssl-key.pem;
+#
+#     root /var/www/html/example/public;
+#     index index.php index.html;
+#
+#     # ... 其他配置同上
+# }

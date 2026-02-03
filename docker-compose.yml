@@ -87,7 +87,7 @@ services:
       retries: 3
 
   mysql:
-    image: mysql:5.7
+    image: mysql:8.0
     container_name: lnmp-mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}

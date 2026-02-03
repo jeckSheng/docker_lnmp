@@ -45,7 +45,7 @@ RUN docker-php-ext-configure gd \
     --with-xpm-dir=/usr/include/
 
 # 配置 LDAP 扩展
-RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/
+RUN docker-php-ext-configure ldap --with-libdir=lib/$(dpkg-architecture --query DEB_BUILD_MULTIARCH)
 
 # 配置 zip 扩展
 RUN docker-php-ext-configure zip --with-libzip

@@ -8,8 +8,7 @@ services:
     volumes:
       - ./services/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./services/nginx/conf:/etc/nginx/conf:ro
-      - ./certbot/ssl.pem:/etc/nginx/ssl/ssl.pem:ro
-      - ./certbot/ssl-key.pem:/etc/nginx/ssl/ssl-key.pem:ro
+      - ./services/nginx/ssl:/etc/nginx/ssl/:ro
       - ~/www:/var/www/html:ro
     depends_on:
       php83:

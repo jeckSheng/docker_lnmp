@@ -4,12 +4,46 @@
 
 ## 特性
 
-- Nginx + PHP-FPM + MySQL 5.7 + Redis
+- Nginx + PHP-FPM + MySQL 8.0 + Redis
 - 多版本 PHP 支持 (7.3, 7.4, 8.3)
 - 完整的 PHP 扩展预装 (GD, Redis, Xdebug, ImageMagick 等)
 - Xdebug 调试支持
 - Composer 预装
 - 便捷的 Makefile 命令
+
+## 首先安装 docker
+
+[Docker Desktop for Mac](https://www.docker.com/products/docker-desktop)
+[Docker Desktop for Windows](https://www.docker.com/products/docker-desktop)
+[Docker Engine for Linux](https://docs.docker.com/engine/install/)
+
+配置 daemon 配置文件：
+
+```yaml
+{
+  "builder": {
+    "gc": {
+      "defaultKeepStorage": "20GB",
+      "enabled": true
+    }
+  },
+  "features": {
+    "buildkit": true
+  },
+  "registry-mirrors": [
+    "https://docker.1ms.run",
+    "https://docker.m.daocloud.io",
+    "https://hub-mirror.c.163.com",
+    "https://docker.mirrors.ustc.edu.cn",
+    "https://gst6rzl9.mirror.aliyuncs.com"
+  ],
+  "dns": [
+    "8.8.8.8",
+    "114.114.114.114"
+  ]
+}
+```
+
 
 ## 快速开始
 

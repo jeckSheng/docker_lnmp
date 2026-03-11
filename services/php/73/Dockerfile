@@ -122,3 +122,18 @@ RUN cd /tmp/ && \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 WORKDIR /var/www/html
+
+
+# ========== 修复 VSCode 权限问题 ==========
+ARG USERNAME=vscode
+ARG USER_UID=1000
+ARG USER_GID=1000
+
+# 创建用户并设置家目录
+RUN groupadd --gid $USER_GID $USERNAME 2>/dev/null || true && \
+    useradd --uid $USER_UID --gid $USER_GID -m -d /home/vscode -s /bin/bash $USERNAME 2>/dev/null || true && \
+    usermod -aG www-data $USERNAME && \
+    chown -R $USERNAME:$USERNAME /home/vscode
+
+# 设置环境变量（关键！）
+ENV HOME=/home/vscode

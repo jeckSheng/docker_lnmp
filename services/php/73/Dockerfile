@@ -33,7 +33,6 @@ RUN apt-get update && apt-get install -y \
     libsnmp-dev \
     librabbitmq-dev \
     libssh2-1-dev \
-    libmcrypt-dev \
     zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 

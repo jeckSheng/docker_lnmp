@@ -13,6 +13,8 @@ services:
     depends_on:
       php83:
         condition: service_healthy
+      php82:
+        condition: service_healthy
       php74:
         condition: service_healthy
       php73:
@@ -60,6 +62,25 @@ services:
     restart: unless-stopped
     environment:
       - PHP_IDE_CONFIG=serverName=php74.local
+    healthcheck:
+      test: ["CMD", "php-fpm", "-t"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  php82:
+    build: ./services/php/82
+    container_name: lnmp-php82
+    volumes:
+      - ~/www:/var/www/html
+    user: "${UID:-1000}:${GID:-1000}"
+    networks:
+      - app-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+    environment:
+      - PHP_IDE_CONFIG=serverName=php82.local
     healthcheck:
       test: ["CMD", "php-fpm", "-t"]
       interval: 30s

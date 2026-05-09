@@ -1,11 +1,11 @@
 # Docker LNMP
 
-基于 Docker Compose 的多版本 PHP 开发平台，支持 PHP 7.3、7.4、8.3。
+基于 Docker Compose 的多版本 PHP 开发平台，支持 PHP 7.3、7.4、8.2、8.3。
 
 ## 特性
 
 - Nginx + PHP-FPM + MySQL 8.0 + Redis
-- 多版本 PHP 支持 (7.3, 7.4, 8.3)
+- 多版本 PHP 支持 (7.3, 7.4, 8.2, 8.3)
 - 完整的 PHP 扩展预装 (GD, Redis, Xdebug, ImageMagick 等)
 - Xdebug 调试支持
 - Composer 预装
@@ -79,6 +79,7 @@ docker_lnmp/
     └── php/
         ├── 73/
         ├── 74/
+        ├── 82/
         └── 83/
 ```
 
@@ -105,6 +106,7 @@ make logs s=php83    # 查看指定服务日志
 ```bash
 make php73           # 进入 PHP 7.3
 make php74           # 进入 PHP 7.4
+make php82           # 进入 PHP 8.2
 make php83           # 进入 PHP 8.3
 ```
 

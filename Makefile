@@ -98,12 +98,15 @@ pull: ## 更新所有 Docker 镜像
 	@echo "$(GREEN)镜像更新完成$(RESET)"
 
 # --- PHP 容器访问 ---
-.PHONY: php73 php74 php83 shell
+.PHONY: php73 php74 php82 php83 shell
 php73: ## 进入 PHP 7.3 容器
 	@$(DOCKER_COMPOSE) exec php73 /bin/bash
 
 php74: ## 进入 PHP 7.4 容器
 	@$(DOCKER_COMPOSE) exec php74 /bin/bash
+
+php82: ## 进入 PHP 8.2 容器
+	@$(DOCKER_COMPOSE) exec php82 /bin/bash
 
 php83: ## 进入 PHP 8.3 容器
 	@$(DOCKER_COMPOSE) exec php83 /bin/bash
@@ -126,12 +129,15 @@ define run_composer
 	fi
 endef
 
-.PHONY: composer73 composer74 composer83 composer
+.PHONY: composer73 composer74 composer82 composer83 composer
 composer73: ## PHP 7.3 Composer (p=项目 cmd="命令")
 	$(call run_composer,73)
 
 composer74: ## PHP 7.4 Composer (p=项目 cmd="命令")
 	$(call run_composer,74)
+
+composer82: ## PHP 8.2 Composer (p=项目 cmd="命令")
+	$(call run_composer,82)
 
 composer83: ## PHP 8.3 Composer (p=项目 cmd="命令")
 	$(call run_composer,83)
@@ -333,6 +339,7 @@ services: ## 显示所有服务信息
 	@echo "$(MAGENTA)PHP 版本:$(RESET)"
 	@echo "  PHP 7.3: make php73"
 	@echo "  PHP 7.4: make php74"
+	@echo "  PHP 8.2: make php82"
 	@echo "  PHP 8.3: make php83"
 
 # --- 帮助 ---
@@ -352,6 +359,7 @@ help: ## 显示帮助信息
 	@echo "$(MAGENTA)PHP 容器:$(RESET)"
 	@echo "  $(GREEN)make php73$(RESET)         进入 PHP 7.3"
 	@echo "  $(GREEN)make php74$(RESET)         进入 PHP 7.4"
+	@echo "  $(GREEN)make php82$(RESET)         进入 PHP 8.2"
 	@echo "  $(GREEN)make php83$(RESET)         进入 PHP 8.3"
 	@echo ""
 	@echo "$(MAGENTA)Composer:$(RESET)"
@@ -378,4 +386,5 @@ version: ## 显示版本信息
 	@echo "$(CYAN)Docker LNMP v1.0$(RESET)"
 	@$(DOCKER_COMPOSE) exec php73 php -v 2>/dev/null | head -1 | sed 's/^/  PHP 7.3: /' || echo "  PHP 7.3: 未运行"
 	@$(DOCKER_COMPOSE) exec php74 php -v 2>/dev/null | head -1 | sed 's/^/  PHP 7.4: /' || echo "  PHP 7.4: 未运行"
+	@$(DOCKER_COMPOSE) exec php82 php -v 2>/dev/null | head -1 | sed 's/^/  PHP 8.2: /' || echo "  PHP 8.2: 未运行"
 	@$(DOCKER_COMPOSE) exec php83 php -v 2>/dev/null | head -1 | sed 's/^/  PHP 8.3: /' || echo "  PHP 8.3: 未运行"

@@ -14,7 +14,7 @@ usage() {
     echo "使用方法: $0 <php版本> <扩展名> [版本号]"
     echo ""
     echo "参数说明:"
-    echo "  php版本    : 73, 74 或 83"
+    echo "  php版本    : 73, 74, 82 或 83"
     echo "  扩展名     : 要安装的扩展名称"
     echo "  版本号     : 可选，指定扩展版本"
     echo ""
@@ -37,8 +37,8 @@ EXTENSION=$2
 EXT_VERSION=${3:-""}
 
 # 验证 PHP 版本
-if [[ ! "$PHP_VERSION" =~ ^(73|74|83)$ ]]; then
-    echo -e "${RED}错误: PHP 版本必须是 73, 74 或 83${NC}"
+if [[ ! "$PHP_VERSION" =~ ^(73|74|82|83)$ ]]; then
+    echo -e "${RED}错误: PHP 版本必须是 73, 74, 82 或 83${NC}"
     exit 1
 fi
 

@@ -13,6 +13,8 @@ mysql/data/
 # SSL certificates
 certbot/*
 !certbot/.gitkeep
+services/nginx/ssl/*
+!services/nginx/ssl/.gitkeep
 
 # IDE
 .vscode/

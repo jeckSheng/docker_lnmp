@@ -20,9 +20,11 @@ certbot/*
 *.swp
 *.swo
 .DS_Store
+.claude
 
 # Nginx project configs (user-specific)
 services/nginx/conf/*
+services/nginx/ssl/*
 !services/nginx/conf/.gitkeep
 !services/nginx/conf/example.conf.template
 CLAUDE.md

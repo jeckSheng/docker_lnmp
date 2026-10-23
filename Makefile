@@ -98,7 +98,7 @@ pull: ## 更新所有 Docker 镜像
 	@echo "$(GREEN)镜像更新完成$(RESET)"
 
 # --- PHP 容器访问 ---
-.PHONY: php73 php74 php82 php83 shell
+.PHONY: php73 php74 php82 php83 php85 shell
 php73: ## 进入 PHP 7.3 容器
 	@$(DOCKER_COMPOSE) exec php73 /bin/bash
 
@@ -110,6 +110,9 @@ php82: ## 进入 PHP 8.2 容器
 
 php83: ## 进入 PHP 8.3 容器
 	@$(DOCKER_COMPOSE) exec php83 /bin/bash
+
+php85: ## 进入 PHP 8.5 容器（客服系统 qudao）
+	@$(DOCKER_COMPOSE) exec php85 /bin/bash
 
 shell: php83 ## 进入默认 PHP 容器 (php83)
 
@@ -129,7 +132,7 @@ define run_composer
 	fi
 endef
 
-.PHONY: composer73 composer74 composer82 composer83 composer
+.PHONY: composer73 composer74 composer82 composer83 composer85 composer
 composer73: ## PHP 7.3 Composer (p=项目 cmd="命令")
 	$(call run_composer,73)
 
@@ -141,6 +144,9 @@ composer82: ## PHP 8.2 Composer (p=项目 cmd="命令")
 
 composer83: ## PHP 8.3 Composer (p=项目 cmd="命令")
 	$(call run_composer,83)
+
+composer85: ## PHP 8.5 Composer (p=项目 cmd="命令")
+	$(call run_composer,85)
 
 composer: composer83 ## 默认使用 PHP 8.3 Composer
 
@@ -341,6 +347,7 @@ services: ## 显示所有服务信息
 	@echo "  PHP 7.4: make php74"
 	@echo "  PHP 8.2: make php82"
 	@echo "  PHP 8.3: make php83"
+	@echo "  PHP 8.5: make php85"
 
 # --- 帮助 ---
 .PHONY: help
@@ -361,6 +368,7 @@ help: ## 显示帮助信息
 	@echo "  $(GREEN)make php74$(RESET)         进入 PHP 7.4"
 	@echo "  $(GREEN)make php82$(RESET)         进入 PHP 8.2"
 	@echo "  $(GREEN)make php83$(RESET)         进入 PHP 8.3"
+	@echo "  $(GREEN)make php85$(RESET)         进入 PHP 8.5"
 	@echo ""
 	@echo "$(MAGENTA)Composer:$(RESET)"
 	@echo "  $(GREEN)make composer83 p=项目 cmd=\"install\"$(RESET)"
@@ -388,3 +396,4 @@ version: ## 显示版本信息
 	@$(DOCKER_COMPOSE) exec php74 php -v 2>/dev/null | head -1 | sed 's/^/  PHP 7.4: /' || echo "  PHP 7.4: 未运行"
 	@$(DOCKER_COMPOSE) exec php82 php -v 2>/dev/null | head -1 | sed 's/^/  PHP 8.2: /' || echo "  PHP 8.2: 未运行"
 	@$(DOCKER_COMPOSE) exec php83 php -v 2>/dev/null | head -1 | sed 's/^/  PHP 8.3: /' || echo "  PHP 8.3: 未运行"
+	@$(DOCKER_COMPOSE) exec php85 php -v 2>/dev/null | head -1 | sed 's/^/  PHP 8.5: /' || echo "  PHP 8.5: 未运行"

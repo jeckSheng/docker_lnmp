@@ -11,6 +11,8 @@ services:
       - ./services/nginx/ssl:/etc/nginx/ssl/:ro
       - ~/www:/var/www/html:ro
     depends_on:
+      php85:
+        condition: service_healthy
       php83:
         condition: service_healthy
       php82:
@@ -40,6 +42,14 @@ services:
       - app-network
     extra_hosts:
       - "host.docker.internal:host-gateway"
+      - "crm.beise.com:host-gateway"
+      - "tianji.beise.com:host-gateway"
+      - "xinzhi.aimei.group:host-gateway"
+      - "chadm.beise.com:host-gateway"
+      - "dingding.cbzr.com:139.196.143.34"
+      - "dingocr.cbzr.com:139.196.143.34"
+      - "pinyin.beise.com:139.196.143.34"
+      - "krh_dev.beise.com:10.29.77.11"
     restart: unless-stopped
     environment:
       - PHP_IDE_CONFIG=serverName=php73.local
@@ -59,6 +69,14 @@ services:
       - app-network
     extra_hosts:
       - "host.docker.internal:host-gateway"
+      - "crm.beise.com:host-gateway"
+      - "tianji.beise.com:host-gateway"
+      - "xinzhi.aimei.group:host-gateway"
+      - "chadm.beise.com:host-gateway"
+      - "dingding.cbzr.com:139.196.143.34"
+      - "dingocr.cbzr.com:139.196.143.34"
+      - "pinyin.beise.com:139.196.143.34"
+      - "krh_dev.beise.com:10.29.77.11"
     restart: unless-stopped
     environment:
       - PHP_IDE_CONFIG=serverName=php74.local
@@ -78,6 +96,14 @@ services:
       - app-network
     extra_hosts:
       - "host.docker.internal:host-gateway"
+      - "crm.beise.com:host-gateway"
+      - "tianji.beise.com:host-gateway"
+      - "xinzhi.aimei.group:host-gateway"
+      - "chadm.beise.com:host-gateway"
+      - "dingding.cbzr.com:139.196.143.34"
+      - "dingocr.cbzr.com:139.196.143.34"
+      - "pinyin.beise.com:139.196.143.34"
+      - "krh_dev.beise.com:10.29.77.11"
     restart: unless-stopped
     environment:
       - PHP_IDE_CONFIG=serverName=php82.local
@@ -97,9 +123,44 @@ services:
       - app-network
     extra_hosts:
       - "host.docker.internal:host-gateway"
+      - "crm.beise.com:host-gateway"
+      - "tianji.beise.com:host-gateway"
+      - "xinzhi.aimei.group:host-gateway"
+      - "chadm.beise.com:host-gateway"
+      - "dingding.cbzr.com:139.196.143.34"
+      - "dingocr.cbzr.com:139.196.143.34"
+      - "pinyin.beise.com:139.196.143.34"
+      - "krh_dev.beise.com:10.29.77.11"
     restart: unless-stopped
     environment:
       - PHP_IDE_CONFIG=serverName=php83.local
+    healthcheck:
+      test: ["CMD", "php-fpm", "-t"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  php85:
+    build: ./services/php/85
+    container_name: lnmp-php85
+    volumes:
+      - ~/www:/var/www/html
+    user: "${UID:-1000}:${GID:-1000}"
+    networks:
+      - app-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+      - "crm.beise.com:host-gateway"
+      - "tianji.beise.com:host-gateway"
+      - "xinzhi.aimei.group:host-gateway"
+      - "chadm.beise.com:host-gateway"
+      - "dingding.cbzr.com:139.196.143.34"
+      - "dingocr.cbzr.com:139.196.143.34"
+      - "pinyin.beise.com:139.196.143.34"
+      - "krh_dev.beise.com:10.29.77.11"
+    restart: unless-stopped
+    environment:
+      - PHP_IDE_CONFIG=serverName=php85.local
     healthcheck:
       test: ["CMD", "php-fpm", "-t"]
       interval: 30s

@@ -117,6 +117,25 @@ RUN cd /tmp/ && \
     && docker-php-ext-enable redis \
     && rm -rf /tmp/*
 
+# ========== HTML 转图片依赖(钉钉推送出图: generate_stats_image::htmlToImage 走 Xvfb + wkhtmltoimage) ==========
+# 与线上一致: wkhtmltox 0.12.6.1-3(patched qt, 含 /usr/local/bin/wkhtmltoimage) + Xvfb + Noto CJK 字体
+# 架构自动探测: 本地 arm64 / 线上 amd64 均有对应 .deb
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+        xvfb \
+        fontconfig \
+        fonts-noto-cjk \
+        xfonts-base \
+        xfonts-75dpi \
+        xfonts-encodings; \
+    arch="$(dpkg --print-architecture)"; \
+    wget -O /tmp/wkhtmltox.deb \
+        "https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.bullseye_${arch}.deb"; \
+    apt-get install -y --no-install-recommends /tmp/wkhtmltox.deb; \
+    rm -f /tmp/wkhtmltox.deb; \
+    rm -rf /var/lib/apt/lists/*
+
 # 清理
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 

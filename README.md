@@ -65,6 +65,7 @@ make init
 ```
 docker_lnmp/
 ├── docker-compose.yml
+├── docker-compose.override.yml # 可选，本地配置 (gitignore)
 ├── Makefile
 ├── .env.example
 ├── certbot/              # SSL 证书
@@ -81,6 +82,47 @@ docker_lnmp/
         ├── 74/
         ├── 82/
         └── 83/
+```
+
+## 本地 Compose 配置
+
+`docker-compose.yml` 保存团队共享配置；本机专用的域名映射等配置放在项目根目录的 `docker-compose.override.yml`。该文件已加入 `.gitignore`，需要时自行创建，不提交到 Git。
+
+例如，让 PHP 7.4 容器通过宿主机访问本地站点：
+
+```yaml
+services:
+  php74:
+    extra_hosts:
+      - "app.example.test:host-gateway"
+      - "admin.example.test:host-gateway"
+      - "local.example.test:host-gateway"
+```
+
+`host-gateway` 指向宿主机。映射仅影响所配置容器内的域名解析，不会修改宿主机的 hosts 文件，也不会创建 Nginx 站点；宿主机需要有对应的站点服务。其他 PHP 容器如需相同映射，在各自服务名（`php73`、`php82`、`php83`）下添加 `extra_hosts`。
+
+默认执行 `docker compose` 时会自动合并该文件，现有 Makefile 命令也会加载它，无需修改启动脚本。
+
+```bash
+# 校验合并后的配置
+docker compose config --quiet
+
+# 应用本地配置，必要时自动重建容器
+make up
+
+# 只应用到 PHP 7.4，不启动依赖服务
+docker compose up -d --no-deps php74
+```
+
+修改域名映射后需要执行 `up -d` 应用；`make restart` 只重启现有容器，不会应用新的 Compose 配置。
+
+如果显式使用 `-f`，需要同时指定本地覆盖文件：
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.override.yml up -d
+
+# 仅使用共享配置，跳过本地覆盖文件
+docker compose -f docker-compose.yml config --quiet
 ```
 
 ## 代码目录
